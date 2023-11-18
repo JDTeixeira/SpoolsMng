@@ -10,7 +10,6 @@ How many spools there on last layer?
 spoolsQuantity  =int(input("Fill the spool number to load   "))
 spoolsType      =int(input("Spool type: Big Spools -> 1 Small Spools -> 2   "))
 
-
 configLayersPallet=spoolsType*3
 configSpoolsByLayer=12
 
@@ -21,18 +20,25 @@ def palletQty(spoolsQty,spoolsByLayer,maxLayers):
 
     spoolsLastPallet    =(palletQty-int(palletQty))*spoolsByPallet
     layersLastPallet    =spoolsLastPallet/spoolsByLayer
-    spoolsLastLayer     =(layersLastPallet-int(layersLastPallet))*spoolsByLayer
-    
-    if spoolsLastPallet:
-        tempPalletQty=int(palletQty)+1 
+    spoolsLastLayer     =(spoolsLastPallet-int(layersLastPallet)*spoolsByLayer);  
+          
+    if spoolsLastPallet>0:
+        tempPalletQty=int(palletQty)+1
+    else:
+        tempPalletQty=int(palletQty)
+ 
     if spoolsLastLayer>0:
         tempLayersLastPallet=int(layersLastPallet)+1
+        tempSpoolsLastlayer=int(spoolsLastLayer)
+    else:
+        tempLayersLastPallet=int(layersLastPallet)
+        tempSpoolsLastlayer=spoolsByLayer
 
     palletDict["PalletQty"]                 =tempPalletQty    
     palletDict["CompledtedPalletQty"]       =int(palletQty)
     palletDict["LayersLastPallet"]          =tempLayersLastPallet 
     palletDict["CompletedLayersLastPallet"] =int(layersLastPallet)
-    palletDict["SpoolsLastLayer"]           =int(spoolsLastLayer)
+    palletDict["SpoolsLastLayer"]           =int(tempSpoolsLastlayer)
     
     #Plausability Check Results
     spoolsCalculation=palletDict["CompledtedPalletQty"]*spoolsByPallet+palletDict["CompletedLayersLastPallet"]*spoolsByLayer+spoolsLastLayer
